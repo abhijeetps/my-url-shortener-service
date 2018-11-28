@@ -56,7 +56,7 @@ app.post("/api/shorturl/new", (req, res) => {
     } 
     else {
       console.log('In dns lookup - successful')
-      URL.find({"original_url": original_url}, (err, data) => {
+      URL.findOne({"original_url": original_url}, (err, data) => {
         console.log("In URL.find")
         if(err) {
           console.log("In URL.find - URL not found ")
