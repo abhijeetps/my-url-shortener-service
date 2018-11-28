@@ -55,8 +55,15 @@ app.post("/api/shorturl/new", (req, res) => {
     else {
       URL.find({"original_url": original_url}, (err, data) => {
         if(err) {
-          let short_url = process.env.PROJECT_URL + randomstring.generate(5)
-          URL.create({"original_url": original_url, "short_url": short_url})
+          let short_url = randomstring.generate(5)
+          URL.create({"original_url": original_url, "short_url": short_url}, (err, done) => {
+          if (err) {
+            console.log(err)
+          }
+          else {
+            res.json({"original_url": original_url, "short_url": process.env.PROJECT_URL + '/api/shorturl/' + short_url})
+          }
+          })
         }
         else {
           console.log('short_url already exists.')
@@ -68,8 +75,17 @@ app.post("/api/shorturl/new", (req, res) => {
 })
 
 
-app.get("/api/shorturl/:original_url", function (req, res) {
-  let original_url = req.params.original_url
+app.get("/api/shorturl/:short_url", function (req, res) {
+  let short_url = req.params.short_url
+  URL.find({"short_url": short_url}, (err, data) => {
+    if (err) {
+      console.log('Page does not exist')
+    }
+    else {
+      console.log(data.original_url)
+    }
+  })
+  
   
 });
 
