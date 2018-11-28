@@ -51,7 +51,7 @@ app.post("/api/shorturl/new", (req, res) => {
   let original_url = req.body.url
   URL.find({"original_url": original_url}, (err, data) => {
     if(err) {
-      
+      URL.create()
     }
   })
 
