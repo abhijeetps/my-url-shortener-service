@@ -45,28 +45,36 @@ app.get('/', function(req, res){
 });
 
 app.post("/api/shorturl/new", (req, res) => {
-  console.log(req.body.url)
   let original_url = req.body.url
   let options = {all: true}
+  console.log(original_url)
   dns.lookup(original_url, options, (err, addresses) => {
+    console.log('In dns lookup')
     if (err) {
+      console.log('In dns lookup - error occured')
       res.json({"error":"invalid URL"})
     } 
     else {
+      console.log('In dns lookup - successful')
       URL.find({"original_url": original_url}, (err, data) => {
+        console.log("In URL.find")
         if(err) {
+          console.log("In URL.find - URL not found ")
           let short_url = randomstring.generate(5)
           URL.create({"original_url": original_url, "short_url": short_url}, (err, done) => {
-          if (err) {
-            console.log(err)
-          }
-          else {
-            res.json({"original_url": original_url, "short_url": process.env.PROJECT_URL + '/api/shorturl/' + short_url})
-          }
+            console.log('In URL.create')
+            if (err) {
+              console.log('In URL.create - URL.create failed')
+              console.log(err)
+            }
+            else {
+              console.log('In URL.create - URL creation successful')
+              res.json({"original_url": original_url, "short_url": process.env.PROJECT_URL + '/api/shorturl/' + short_url})
+            }
           })
         }
         else {
-          console.log('short_url already exists.')
+          console.log('In URL.find - short_url already exists.')
           console.log(data)
         }
       })
