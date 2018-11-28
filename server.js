@@ -4,11 +4,17 @@ const express = require('express');
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 
-const dns = require('dns')
+const bodyParser = require("body-parser");
 
+
+const dns = require('dns')
 const cors = require('cors');
 
 const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 // Basic Configuration 
 const port = process.env.PORT || 3000;
@@ -41,7 +47,13 @@ app.get('/', function(req, res){
 // your first API endpoint... 
 
 app.post("/api/shorturl/new", (req, res) => {
-  console.log(req)
+  console.log(req.body.url)
+  let original_url = req.body.url
+  URL.find({"original_url": original_url}, (err, data) => {
+    if(err) {
+      
+    }
+  })
 
 })
 
