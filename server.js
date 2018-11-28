@@ -37,8 +37,8 @@ app.get("/api/shorturl/:original_url", function (req, res) {
   dns.lookup(original_url, options, (err, addresses) => {
     if (err) {
       res.json({"error":"invalid URL"})
-    } else{
-      console.log(addresses)
+    } 
+    else {
       res.json({"original_url": req.params.original_url, "short_url": ""});
     }
   })
