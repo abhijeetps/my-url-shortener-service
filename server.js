@@ -43,9 +43,6 @@ app.get('/', function(req, res){
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-  
-// your first API endpoint... 
-
 app.post("/api/shorturl/new", (req, res) => {
   console.log(req.body.url)
   let original_url = req.body.url
