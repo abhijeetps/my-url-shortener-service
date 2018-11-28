@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 
 // Basic Configuration 
 const port = process.env.PORT || 3000;
+const randomnumber = require('randomnumber')
 
 /** this project needs a db !! **/ 
 mongoose.connect(process.env.MONGOLAB_URI, {
@@ -48,7 +49,11 @@ app.post("/api/shorturl/new", (req, res) => {
   let original_url = req.body.url
   URL.find({"original_url": original_url}, (err, data) => {
     if(err) {
-      URL.create()
+      let short_url = process.env.PROJECT_URL + randomnumber.generate(5)
+      URL.create({"original_url": original_url, "short_url": })
+    }
+    else {
+      console.log()
     }
   })
 
