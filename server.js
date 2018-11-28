@@ -39,6 +39,13 @@ app.get('/', function(req, res){
 
   
 // your first API endpoint... 
+
+app.post("/api/shorturl/new", (req, res) => {
+  console.log(req)
+
+})
+
+
 app.get("/api/shorturl/:original_url", function (req, res) {
   let original_url = req.params.original_url
   let options = {all: true}
