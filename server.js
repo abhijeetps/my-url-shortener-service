@@ -23,6 +23,14 @@ app.use(cors());
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
 
+const urlSchema = mongoose.Schema({
+  "original_url": String,
+  "short_url": String
+})
+
+let URL = mongoose.model('URL', urlSchema)
+
+
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.get('/', function(req, res){
