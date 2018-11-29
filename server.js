@@ -58,26 +58,27 @@ app.post("/api/shorturl/new", (req, res) => {
       console.log('In dns lookup - successful')
       URL.findOne({"original_url": original_url}, (err, data) => {
         console.log("In URL.find")
-        console.log(err)
-        console.log(data)
         if(err) {
-          console.log("In URL.find - URL not found ")
-          let short_url = randomstring.generate(5)
-          URL.create({"original_url": original_url, "short_url": short_url}, (err, done) => {
-            console.log('In URL.create')
-            if (err) {
-              console.log('In URL.create - URL.create failed')
-              console.log(err)
-            }
-            else {
-              console.log('In URL.create - URL creation successful')
-              res.json({"original_url": original_url, "short_url": process.env.PROJECT_URL + '/api/shorturl/' + short_url})
-            }
-          })
+          console.log("In URL.find - Error occured " + err)
         }
         else {
-          console.log('In URL.find - short_url already exists.')
-          console.log(data)
+          console.log('In URL.find - Success')
+          if(data == null) {
+            let short_url = randomstring.generate(5)
+            URL.create({"original_url": original_url, "short_url": short_url}, (err, done) => {
+              console.log('In URL.create')
+              if (err) {
+                console.log('In URL.create - URL.create failed' + err)
+              }
+              else {
+                console.log('In URL.create - URL creation successful')
+                res.json({"original_url": original_url, "short_url": process.env.PROJECT_URL + 'api/shorturl/' + short_url})
+              }
+            })
+          }
+          else {
+            console.log('URL already exis')
+          }
         }
       })
     }
