@@ -58,6 +58,8 @@ app.post("/api/shorturl/new", (req, res) => {
       console.log('In dns lookup - successful')
       URL.findOne({"original_url": original_url}, (err, data) => {
         console.log("In URL.find")
+        console.log(err)
+        console.log(data)
         if(err) {
           console.log("In URL.find - URL not found ")
           let short_url = randomstring.generate(5)
