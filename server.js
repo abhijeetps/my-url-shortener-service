@@ -97,7 +97,10 @@ app.get("/api/shorturl/:short_url", function (req, res) {
     }
     else {
       console.log(data.original_url)
-      res.redirect('http://' + data.original_url)
+      let httpString = 'http://'
+      if (data.original_url.includes('http://') || data.original_url.includes('https://'))
+        httpString = ''
+      res.redirect(httpString + data.original_url)
     }
   })
 });
