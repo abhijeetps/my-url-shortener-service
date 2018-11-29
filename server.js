@@ -23,8 +23,6 @@ const randomstring = require('randomstring')
 /** this project needs a db !! **/ 
 mongoose.connect(process.env.MONGOLAB_URI, {
   useMongoClient: true
-}, (err) => {
-  console.log(err)
 });
 
 app.use(cors());
