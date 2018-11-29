@@ -45,6 +45,7 @@ app.get('/', function(req, res){
 });
 
 app.post("/api/shorturl/new", (req, res) => {
+  console.log('In POST method')
   let original_url = req.body.url
   let options = {all: true}
   console.log(original_url)
@@ -77,7 +78,8 @@ app.post("/api/shorturl/new", (req, res) => {
             })
           }
           else {
-            console.log('URL already exis')
+            console.log('URL already exists.')
+            res.json({"original_url": data.original_url, "short_url": process.env.PROJECT_URL + 'api/shorturl/' + data.short_url})
           }
         }
       })
@@ -87,17 +89,17 @@ app.post("/api/shorturl/new", (req, res) => {
 
 
 app.get("/api/shorturl/:short_url", function (req, res) {
+  console.log('In GET method')
   let short_url = req.params.short_url
-  URL.find({"short_url": short_url}, (err, data) => {
+  URL.findOne({"short_url": short_url}, (err, data) => {
     if (err) {
       console.log('Page does not exist')
     }
     else {
       console.log(data.original_url)
+      res.redirect('http://' + data.original_url)
     }
   })
-  
-  
 });
 
 
